@@ -17,10 +17,18 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField('String', 'BASE_URL', '"https://api.imgur.com/"')
+        }
         release {
             minifyEnabled false
+            buildConfigField('String', 'BASE_URL', '"https://api.imgur.com/"')
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
