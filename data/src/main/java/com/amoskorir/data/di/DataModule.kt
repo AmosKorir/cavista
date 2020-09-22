@@ -7,5 +7,6 @@ class DataModule {
     companion object : KoinComponent {
         val apiModule = ApiModule.apiModule
         val repositoryModule = RepositoryModule.repositoryModule
+        val databaseModule=DatabaseModule.databaseModule
     }
 }

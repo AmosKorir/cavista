@@ -16,6 +16,7 @@ class Covista:Application() {
                 listOf(
                     activityModule,
                     modules.apiModule,
+                    modules.databaseModule,
                     modules.repositoryModule,
                     ViewModelModule.viewModelModule
 
