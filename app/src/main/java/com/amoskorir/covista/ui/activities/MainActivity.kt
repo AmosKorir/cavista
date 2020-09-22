@@ -1,7 +1,8 @@
-package com.amoskorir.covista
+package com.amoskorir.covista.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.amoskorir.covista.R
 
 class MainActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
