@@ -1,17 +1,17 @@
 package com.amoskorir.data.sql.dao
 
 import androidx.room.*
-import com.amoskorir.domain.models.Comment
+import com.amoskorir.data.sql.entities.CommentDbModel
 import io.reactivex.Single
 
 @Dao
 interface CommentDao {
     @Query("SELECT * FROM comments WHERE imageId = :imageId")
-    fun getCustomers(imageId: String): Single<List<Comment>>
+    fun getCustomers(imageId: String): Single<List<CommentDbModel>>
 
     @Delete
-    fun deleteCustomer(comment: Comment): Single<Int>
+    fun deleteCustomer(comment: CommentDbModel): Single<Int>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCustomer(comment: Comment): Single<Long>
+    fun insertCustomer(comment: CommentDbModel): Single<Long>
 }

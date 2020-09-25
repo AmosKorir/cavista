@@ -6,5 +6,6 @@ class CovistaConstants {
         const val ERROR_RESPONSE: String = "error_response"
         const val EMPTY_STRING: String = ""
         const val ACCESS_TOKEN = "access token"
+        const val IMAGE="image"
     }
 }

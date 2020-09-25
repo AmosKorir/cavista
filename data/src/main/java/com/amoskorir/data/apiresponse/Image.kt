@@ -2,6 +2,7 @@ package com.amoskorir.data.apiresponse
 
 
 import com.google.gson.annotations.SerializedName
+import java.math.BigInteger
 
 /**
  * for this specific case, only required fields have been considered
@@ -18,7 +19,7 @@ data class Image(
     @SerializedName("animated")
     val animated: Boolean,
     @SerializedName("bandwidth")
-    val bandwidth: Int,
+    val bandwidth: BigInteger,
     @SerializedName("comment_count")
     val commentCount: Any,
     @SerializedName("datetime")

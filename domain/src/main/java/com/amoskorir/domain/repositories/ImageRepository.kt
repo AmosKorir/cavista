@@ -2,6 +2,7 @@ package com.amoskorir.domain.repositories
 
 import com.amoskorir.domain.models.Comment
 import com.amoskorir.domain.models.Image
+import com.amoskorir.domain.models.ImageWrapper
 import io.reactivex.Single
 
 interface ImageRepository {

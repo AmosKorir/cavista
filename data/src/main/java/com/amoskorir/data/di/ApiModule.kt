@@ -2,6 +2,7 @@
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import com.amoskorir.data.BuildConfig
+import com.amoskorir.data.api.ImageApi
 import com.amoskorir.domain.CovistaConstants
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
@@ -30,54 +31,6 @@ class ApiModule {
                 sharedPreferences.edit().putString(CovistaConstants.ERROR_RESPONSE, body).apply()
             }
 
-            fun getAccessToken(): String? {
-                val sharedPreferences: SharedPreferences by inject()
-                return sharedPreferences.getString(CovistaConstants.ACCESS_TOKEN, "")
-            }
-
-            fun provideHttClientWithToken(): OkHttpClient {
-                val httpLoggingInterceptor = HttpLoggingInterceptor()
-                httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                val okHttpClientBuilder = OkHttpClient.Builder()
-                    .addInterceptor(object : Interceptor {
-                        override fun intercept(chain: Interceptor.Chain): Response {
-                            val original: Request = chain.request()
-                            val request: Request = original.newBuilder()
-                                .header("Authorization", "Bearer  " + getAccessToken()!!)
-                                .build()
-                            return chain.proceed(request)
-                        }
-
-                    })
-                    .addInterceptor(object : Interceptor {
-                        override fun intercept(chain: Interceptor.Chain): Response {
-                            val request = chain.request()
-                            val response = chain.proceed(request)
-
-                            val responseBody = response.body
-                            val source = responseBody?.source();
-                            source?.request(Long.MAX_VALUE); // request the entire body.
-                            val buffer = source?.buffer();
-                            val responseBodyString =
-                                buffer?.clone()?.readString(Charset.forName("UTF-8"))
-                            if (response.code in 400..500) {
-                                if (responseBodyString != null) {
-                                    sendErrorBody(responseBodyString)
-                                }
-                                return response
-                            }
-
-                            return response
-                        }
-
-                    })
-                    .addInterceptor(httpLoggingInterceptor)
-                    .writeTimeout(30, TimeUnit.SECONDS)
-                    .readTimeout(30, TimeUnit.SECONDS)
-
-                return okHttpClientBuilder.build()
-            }
-
             fun provideHttpClient(): OkHttpClient {
                 val httpLoggingInterceptor = HttpLoggingInterceptor()
                 httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -86,6 +39,7 @@ class ApiModule {
                         override fun intercept(chain: Interceptor.Chain): Response {
                             val original: Request = chain.request()
                             val request: Request = original.newBuilder()
+                                .header("Authorization", "Client-ID 137cda6b5008a7c")
                                 .build()
                             return chain.proceed(request)
                         }
@@ -133,19 +87,19 @@ class ApiModule {
 
             // api services
 
-
+            fun provideImageApi(retrofit: Retrofit):ImageApi{
+                return retrofit.create(ImageApi::class.java)
+            }
 
             single { provideGson() }
             single(named("default_okhttp")) { provideHttpClient() }
-            single(named("access_Okhttp")) { provideHttClientWithToken() }
-            single(named("withoutToken_retrofit")) {
+            single {
                 provideRetrofit(
                     get(),
                     get(named("default_okhttp"))
                 )
             }
-            single { provideRetrofit(get(), get(named("access_Okhttp"))) }
-
+            single { provideImageApi(get()) }
 
         }
     }

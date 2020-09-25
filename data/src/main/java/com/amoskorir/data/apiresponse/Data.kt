@@ -45,7 +45,7 @@ data class Data(
     @SerializedName("id")
     val id: String,
     @SerializedName("images")
-    val images: List<Image>,
+    val images: List<Image>?,
     @SerializedName("images_count")
     val imagesCount: Int,
     @SerializedName("in_gallery")

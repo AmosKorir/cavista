@@ -1,3 +1,5 @@
 package com.amoskorir.domain.models
 
-data class Image(val id: String, val link: String)
+import java.io.Serializable
+
+data class Image(val id: String, val link: String):Serializable
