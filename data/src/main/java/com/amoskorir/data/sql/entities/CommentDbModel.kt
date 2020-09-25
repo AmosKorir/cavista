@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull
 @Entity(tableName = "comments")
 data class CommentDbModel(
     @PrimaryKey @NotNull
-    val commentId: Int,
+    val commentId: String,
     val imageId: String,
     val commentMessage: String
 )

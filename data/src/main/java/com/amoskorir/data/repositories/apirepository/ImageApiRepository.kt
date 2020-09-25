@@ -28,4 +28,8 @@ class ImageApiRepository(private val imageApi: ImageApi) : ImageRepository {
         TODO("Not yet implemented")
     }
 
+    override fun comment(imageId: String, comment: String): Single<Long> {
+        TODO("Not yet implemented")
+    }
+
 }

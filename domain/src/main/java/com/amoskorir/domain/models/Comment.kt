@@ -1,7 +1,7 @@
 package com.amoskorir.domain.models
 
 data class Comment(
-    val commentId: Int,
+    val commentId: String,
     val postId: String,
     val comment: String
 )

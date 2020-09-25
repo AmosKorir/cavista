@@ -1,9 +1,8 @@
 package com.amoskorir.covista.ui.activities
 
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.SearchView
-import androidx.lifecycle.Observer
 import com.amoskorir.covista.R
 import com.amoskorir.covista.ui.adapters.ImageAdapter
 import com.amoskorir.domain.models.Image
@@ -12,8 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity() {
-
-    val searchViewModel: SearchViewModel by viewModel()
+    private val searchViewModel: SearchViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,7 +20,6 @@ class MainActivity : BaseActivity() {
 
     private fun initView() {
         searchViewModel.imagesLiveData.observe(this, {
-            Log.d("look",it.size.toString())
             showImages(it)
         })
 
@@ -32,7 +29,8 @@ class MainActivity : BaseActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(searchString: String?): Boolean {
-                searchViewModel.searchImages(searchString!!)
+                progressBar.visibility = View.VISIBLE
+                searchString?.let { searchViewModel.searchImages(it) }
                 return false
             }
 
@@ -40,9 +38,11 @@ class MainActivity : BaseActivity() {
                 return false
             }
         })
+
     }
 
     private fun showImages(images: List<Image>) {
+        progressBar.visibility = View.INVISIBLE
         val imageAdapter = ImageAdapter(this, images)
         imageGridView.adapter = imageAdapter
     }

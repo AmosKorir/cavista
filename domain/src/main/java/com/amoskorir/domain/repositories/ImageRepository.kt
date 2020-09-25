@@ -12,4 +12,7 @@ interface ImageRepository {
     fun getImageComments(imageId: String): Single<List<Comment>>
 
     fun commentImage(comment: Comment): Single<Int>
+
+    fun comment(imageId: String, comment: String): Single<Long>
+
 }
